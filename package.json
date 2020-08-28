@@ -1,0 +1,25 @@
+{
+  "name": "journal-node-api",
+  "version": "0.1.0",
+  "description": "Journal API Exercise",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ogre-yoga/journal-node-api.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "sequelize",
+    "API"
+  ],
+  "author": "Adam Alexander",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ogre-yoga/journal-node-api/issues"
+  },
+  "homepage": "https://github.com/ogre-yoga/journal-node-api#readme"
+}
