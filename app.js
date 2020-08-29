@@ -1,14 +1,19 @@
-const http = require('http');
+import express from 'express';
+import bodyParser from 'body-parser';
+import entryRoutes from './routes/entries.routes';
 
-const hostname = '127.0.0.1';
-const port = 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.use('/entries', entryRoutes);
+
+
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => res.status(200).send({
+   message: 'welcome to The Blog API'
+}));
+
+app.listen(port, () => console.log(`Server is running on PORT ${port}`));

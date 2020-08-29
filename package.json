@@ -4,7 +4,7 @@
   "description": "Journal API Exercise",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devStart": "nodemon --exec babel-node app.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,6 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "node": "^12.18.3",
-    "nodemon": "^2.0.4",
     "sequelize": "^6.3.4"
   },
   "devDependencies": {
@@ -34,6 +33,7 @@
     "@babel/core": "^7.11.4",
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.0",
-    "@babel/register": "^7.10.5"
+    "@babel/register": "^7.10.5",
+    "nodemon": "^2.0.4"
   }
 }
