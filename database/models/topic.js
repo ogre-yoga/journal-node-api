@@ -3,24 +3,24 @@ const {
   Model
 } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class Entry extends Model {
+  class Topic extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      Entry.belongsToMany(models.Topic, {
+      Topic.belongsToMany(models.Entry, {
         through: 'CrossReference'
       })
     }
   };
-  Entry.init({
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT
+  Topic.init({
+    label: DataTypes.STRING,
+    description: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Entry'
+    modelName: 'Topic'
   })
-  return Entry
+  return Topic
 }
