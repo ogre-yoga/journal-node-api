@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
+    status: {
+      type: DataTypes.ENUM,
+      values: ['draft', 'private', 'public'],
+      defaultValue: 'draft'
+    },
     title: DataTypes.STRING,
     body: DataTypes.TEXT
   }, {
