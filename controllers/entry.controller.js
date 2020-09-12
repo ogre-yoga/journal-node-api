@@ -5,7 +5,6 @@ async function index (req, res) {
     const entries = await Entry.findAll({
       include: {
         model: Topic,
-        as: 'Topics',
         attributes: ['label'],
         through: {
           attributes: []
@@ -40,7 +39,6 @@ async function show (req, res) {
       where: { id: req.params.id },
       include: {
         model: Topic,
-        as: 'Topics',
         attributes: ['label'],
         through: {
           attributes: []

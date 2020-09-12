@@ -2,7 +2,15 @@ const { Entry, Topic } = require('../database/models/')
 
 async function index (req, res) {
   try {
-    const topics = await Topic.findAll()
+    const topics = await Topic.findAll({
+      include: {
+        model: Entry,
+        attributes: ['title'],
+        through: {
+          attributes: []
+        }
+      }
+    })
     return res.status(200).json({ topics })
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -27,7 +35,14 @@ async function create (req, res) {
 async function show (req, res) {
   try {
     const topic = await Topic.findOne({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
+      include: {
+        model: Entry,
+        attributes: ['title'],
+        through: {
+          attributes: []
+        }
+      }
     })
 
     if (!topic) {
@@ -88,10 +103,11 @@ async function addEntryToTopic (req, res) {
     if (topic[0] === 0) {
       return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
     }
+    console.log(topic)
 
-    const reference = await topic.addEntry(entryId, {})
+    const reference = await topic.addEntry(entryId)
 
-    return res.status(200).json({ message: `Topic with id ${req.params.id} not found.` })
+    return res.status(200).json({ message: `Topic with id ${req.params.id} updated.` })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
