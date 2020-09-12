@@ -19,17 +19,15 @@ module.exports = {
       entryId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Entry',
-          key: 'id',
-          as: 'entries'
+          model: 'Entries',
+          key: 'id'
         }
       },
       topicId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Topic',
-          key: 'id',
-          as: 'topics'
+          model: 'Topics',
+          key: 'id'
         }
       },
       createdAt: {

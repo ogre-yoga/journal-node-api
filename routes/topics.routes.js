@@ -11,5 +11,6 @@ router.get('/:id', topicController.show)
 router.put('/:id', topicController.update)
 router.delete('/:id', topicController.destroy)
 router.post('/:id/addEntry', topicController.addEntryToTopic)
+router.post('/:id/removeEntry', topicController.removeEntryFromTopic)
 
 export default router

@@ -46,7 +46,7 @@ async function show (req, res) {
     })
 
     if (!topic) {
-      return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
+      return res.status(404).json({ message: `Topic id ${req.params.id} not found.` })
     }
 
     return res.status(200).json({ topic })
@@ -69,10 +69,10 @@ async function update (req, res) {
     )
 
     if (topics[0] === 0) {
-      return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
+      return res.status(404).json({ message: `Topic id ${req.params.id} not found.` })
     }
 
-    return res.status(200).json({ message: `Topic with id ${req.params.id} successfully updated.` })
+    return res.status(200).json({ message: `Topic id ${req.params.id} successfully updated.` })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -83,10 +83,10 @@ async function destroy (req, res) {
     const topic = await Topic.destroy({ where: { id: req.params.id } })
 
     if (!topic) {
-      return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
+      return res.status(404).json({ message: `Topic id ${req.params.id} not found.` })
     }
 
-    return res.status(200).json({ message: `Topic with id ${req.params.id} successfully deleted.` })
+    return res.status(200).json({ message: `Topic id ${req.params.id} successfully deleted.` })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -94,23 +94,58 @@ async function destroy (req, res) {
 
 async function addEntryToTopic (req, res) {
   try {
-    const { entryId } = req.body
+    console.log(req.body.entryId)
 
     const topic = await Topic.findOne({
       where: { id: req.params.id }
     })
 
     if (topic[0] === 0) {
-      return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
+      return res.status(404).json({ message: `Topic id ${req.params.id} not found.` })
     }
-    console.log(topic)
 
-    const reference = await topic.addEntry(entryId)
+    const entry = await Entry.findOne({
+      where: { id: req.body.entryId }
+    })
 
-    return res.status(200).json({ message: `Topic with id ${req.params.id} updated.` })
+    if (entry[0] === 0) {
+      return res.status(404).json({ message: `Entry id ${req.body.entryId} not found.` })
+    }
+
+    const reference = await topic.addEntry(req.body.entryId)
+
+    return res.status(200).json({ message: `Topic id ${req.params.id} added Entry id ${req.body.entryId}.` })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
 }
 
-module.exports = { index, create, show, update, destroy, addEntryToTopic }
+async function removeEntryFromTopic (req, res) {
+  try {
+    console.log(req.body.entryId)
+
+    const topic = await Topic.findOne({
+      where: { id: req.params.id }
+    })
+
+    if (topic[0] === 0) {
+      return res.status(404).json({ message: `Topic id ${req.params.id} not found.` })
+    }
+
+    const entry = await Entry.findOne({
+      where: { id: req.body.entryId }
+    })
+
+    if (entry[0] === 0) {
+      return res.status(404).json({ message: `Entry id ${req.body.entryId} not found.` })
+    }
+
+    const reference = await topic.removeEntry(req.body.entryId)
+
+    return res.status(200).json({ message: `Topic id ${req.params.id} removed Entry id ${req.body.entryId}.` })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+module.exports = { index, create, show, update, destroy, addEntryToTopic, removeEntryFromTopic }
