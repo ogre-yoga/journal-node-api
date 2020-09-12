@@ -5,7 +5,7 @@ async function index (req, res) {
     const topics = await Topic.findAll({
       include: {
         model: Entry,
-        attributes: ['title'],
+        attributes: ['title', 'id'],
         through: {
           attributes: []
         }
@@ -38,7 +38,7 @@ async function show (req, res) {
       where: { id: req.params.id },
       include: {
         model: Entry,
-        attributes: ['title'],
+        attributes: ['title', 'id'],
         through: {
           attributes: []
         }
@@ -94,8 +94,6 @@ async function destroy (req, res) {
 
 async function addEntryToTopic (req, res) {
   try {
-    console.log(req.body.entryId)
-
     const topic = await Topic.findOne({
       where: { id: req.params.id }
     })
@@ -122,8 +120,6 @@ async function addEntryToTopic (req, res) {
 
 async function removeEntryFromTopic (req, res) {
   try {
-    console.log(req.body.entryId)
-
     const topic = await Topic.findOne({
       where: { id: req.params.id }
     })
@@ -148,4 +144,4 @@ async function removeEntryFromTopic (req, res) {
   }
 }
 
-module.exports = { index, create, show, update, destroy, addEntryToTopic, removeEntryFromTopic }
+export { index, create, show, update, destroy, addEntryToTopic, removeEntryFromTopic }

@@ -16,9 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Topic.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     label: DataTypes.STRING,
     description: DataTypes.STRING
-  }, {
+  },
+  {
     sequelize,
     modelName: 'Topic'
   })
