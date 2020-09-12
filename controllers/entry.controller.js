@@ -2,7 +2,17 @@ const { Entry, Topic } = require('../database/models/')
 
 async function index (req, res) {
   try {
-    const entries = await Entry.findAll()
+    const entries = await Entry.findAll({
+      include: {
+        model: Topic,
+        as: 'Topics',
+        attributes: ['label'],
+        through: {
+          attributes: []
+        }
+      }
+
+    })
     return res.status(200).json({ entries })
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -27,7 +37,15 @@ async function create (req, res) {
 async function show (req, res) {
   try {
     const entry = await Entry.findOne({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
+      include: {
+        model: Topic,
+        as: 'Topics',
+        attributes: ['label'],
+        through: {
+          attributes: []
+        }
+      }
     })
 
     if (!entry) {

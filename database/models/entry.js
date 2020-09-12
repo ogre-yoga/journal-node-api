@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       Entry.belongsToMany(models.Topic, {
-        through: 'CrossReference'
+        through: 'TopicEntries'
       })
     }
   };

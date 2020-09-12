@@ -43,7 +43,7 @@ async function show (req, res) {
 async function update (req, res) {
   try {
     const { label, description } = req.body
-    const entries = await Topic.update(
+    const topics = await Topic.update(
       {
         label,
         description
@@ -53,8 +53,8 @@ async function update (req, res) {
       }
     )
 
-    if (entries[0] === 0) {
-    	return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
+    if (topics[0] === 0) {
+      return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
     }
 
     return res.status(200).json({ message: `Topic with id ${req.params.id} successfully updated.` })
@@ -68,7 +68,7 @@ async function destroy (req, res) {
     const topic = await Topic.destroy({ where: { id: req.params.id } })
 
     if (!topic) {
-    	return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
+      return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
     }
 
     return res.status(200).json({ message: `Topic with id ${req.params.id} successfully deleted.` })
@@ -77,4 +77,24 @@ async function destroy (req, res) {
   }
 }
 
-module.exports = { index, create, show, update, destroy }
+async function addEntryToTopic (req, res) {
+  try {
+    const { entryId } = req.body
+
+    const topic = await Topic.findOne({
+      where: { id: req.params.id }
+    })
+
+    if (topic[0] === 0) {
+      return res.status(404).json({ message: `Topic with id ${req.params.id} not found.` })
+    }
+
+    const reference = await topic.addEntry(entryId, {})
+
+    return res.status(200).json({ message: `Topic with id ${req.params.id} not found.` })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+module.exports = { index, create, show, update, destroy, addEntryToTopic }
