@@ -4,7 +4,7 @@ import { Entry } from '../database/models'
 const router = Router()
 const entryController = require('../controllers/entry.controller')
 
-// http://localhost:3000/entries
+// http://localhost:3000/api/entries
 router.get('/', entryController.index)
 router.post('/', entryController.create)
 router.get('/:id', entryController.show)

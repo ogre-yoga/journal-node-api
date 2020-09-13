@@ -1,4 +1,3 @@
-
 const { Entry, Topic } = require('../database/models/')
 
 async function index (req, res) {

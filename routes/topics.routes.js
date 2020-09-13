@@ -4,7 +4,7 @@ import { Topic } from '../database/models'
 const router = Router()
 const topicController = require('../controllers/topic.controller')
 
-// http://localhost:3000/topics
+// http://localhost:3000/api/topics
 router.get('/', topicController.index)
 router.post('/', topicController.create)
 router.get('/:id', topicController.show)
